@@ -1,14 +1,9 @@
-import estimatePrice as ep
+from training import training, display, display_value
+from estimatePrice import estimatePrice
+from theta import setTheta
 
-# ep.plus()
-# print(ep.estimatePrice(100))
-# ep.plus()
-# print(ep.estimatePrice(100))
-km = 61789
-price = 8290
-print("init --- price for {}km : {}\n".format(km, ep.estimatePrice(km)))
-for i in range(1):
-	ep.training()
-	print("{} | price for {}km : {}\n".format(i, km, ep.estimatePrice(km)))
-
-print("real price for {}km = {}$".format(km, price))
+setTheta(0, 0)
+print("before training : 100 000km = {}$".format(estimatePrice(100000)))
+slope, const = training()
+print("after training : 100 000km = {}$".format(estimatePrice(100000)))
+display_value(100000)

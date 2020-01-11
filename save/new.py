@@ -12,7 +12,7 @@ class ClassName(object):
 
 class linearRegression():
 	"""Class linear regression : call training to train a model"""
-	def __init__(self, path = 'data.csv'):
+	def __init__(self, path = '../data.csv'):
 		self.__data = pd.read_csv(path)
 		self.setTheta()
 
@@ -141,16 +141,15 @@ class linearRegression():
 km = 200000		
 lr = linearRegression()
 # lr.data_info()
-print(lr.training.__doc__)
+# print(lr.training.__doc__)
 # print("data :\n", lr.data_info())
 # print("estimate price for {} = {}".format(km, lr.estimatePrice(km)))
 # lr.training(iteration = 10)
 # print("estimate price for {} = {}".format(km, lr.estimatePrice(km)))
 # lr.training(iteration = 100)
 # print("estimate price for {} = {}".format(km, lr.estimatePrice(km)))
-# lr.training()
-# lr.training(precision = 0.005)
-# lr.display()
+lr.training()
+lr.display(True)
 # lr.display(True)
 # lr.display_value(km)
 
