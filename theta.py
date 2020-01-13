@@ -17,25 +17,24 @@ def getTheta(path = "asset/theta.txt"):
 		fd.close()
 		return (slope, const)
 	except OSError:
-		print("can't load :", path)
+		print("getTheta:\ncan't load :", path)
 		exit()
 	except Exception:
-		print("Error while reading file")
+		print("getTheta:\nError while reading file")
 		exit()
 
 def setTheta(slope, const, path = "asset/theta.txt"):
 	try:
 		fd = open(path, "w")
-		fd.write("{}\n{}".format(slope, const))
+		fd.write("{0:f}\n{1:f}".format(slope, const))
 		fd.close()
 	except OSError:
-		print("can't open :", path)
+		print("setTheta:\nError : can't open :", path)
+		exit()
+	except ValueError:
+		print("setTheta:\nError : invalid value")
 		exit()
 	except Exception:
-		print("Error while writing file")
+		print("setTheta:\nError while writing file")
 		exit()
-
-# setTheta(123.4221, 21.000031415)
-# a, b = getTheta()
-
-# print("a = {}, b = {}".format(a, b))
+		

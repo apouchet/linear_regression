@@ -1,7 +1,7 @@
-import theta as th
 from estimatePrice import estimatePrice
-import pandas as pd
 from matplotlib import pyplot as plt
+import theta as th
+import pandas as pd
 import numpy as np
 
 def sign(a):
@@ -13,13 +13,12 @@ def numberLen(a):
 	return len(str(abs(int(a))))
 
 
-
 def display_value(mileage, path = "asset/data.csv"):
 	slope, const = th.getTheta()
 	try :
 		data = pd.read_csv(path)
 	except Exception:
-		print("can't load :", path)
+		print("display_value\ncan't load :", path)
 		exit()
 	X = data.iloc[:, 0]
 	Y = data.iloc[:, 1]
@@ -40,23 +39,26 @@ def display(training = False, evol_slope = 0, evol_const = 0, path = "asset/data
 	slope, const = th.getTheta()
 	try :
 		data = pd.read_csv(path)
+	except ValueError:
+		print("display\nError : const and slope need to be float")
+		exit()
 	except Exception:
-		print("can't load :", path)
+		print("display\ncan't load :", path)
 		exit()
 	X = data.iloc[:, 0]
 	Y = data.iloc[:, 1]
-	
+
 	if training == True and (evol_slope == 0 or evol_const == 0):
-		print("to show training display need to get evol_slope and evol_const in param")
-		return
+		print("display\nError : to show training display need to get evol_slope and evol_const in param")
+		exit()
 
 	plt.rcParams['figure.figsize'] = (12.0, 9.0)
 	plt.xlabel(sorted(data)[1])
 	plt.ylabel(sorted(data)[0])
 
 	if step < 1:
-		print("Error : step must be superior at 0")
-		return
+		print("display\nError : step must be superior at 0")
+		exit()
 
 	if training == True:
 		for i in range(len(evol_slope)):
@@ -72,11 +74,8 @@ def display(training = False, evol_slope = 0, evol_const = 0, path = "asset/data
 	plt.show()
 	plt.clf()
 
-# def data_info(self):
-# 	return data
 
-
-def training(path = "asset/data.csv", info = False, learning_slope = 0, learning_const = 0, iteration = 0, precision = 0.05):
+def training(path = "asset/data.csv", info = False, learning_slope = None, learning_const = None, iteration = 0, precision = 0.05):
 	""">> Use training to train your model with the data set in init\n\tArgs : info, learning_slope, learning_const, iteration, precision"""
 	print("start Training")
 	evol_const = []
@@ -92,7 +91,16 @@ def training(path = "asset/data.csv", info = False, learning_slope = 0, learning
 		return
 
 	try :
+		if learning_slope != None:
+			learning_slope = float(learning_slope)
+		if learning_const != None:
+			learning_const = float(learning_const)
+		precision = float(precision)
+		iteration = int(iteration)
 		data = pd.read_csv(path)
+	except ValueError:
+		print("training\nError : const, slope and precision need to be float, iteration need to be int")
+		exit()
 	except Exception:
 		print("can't load :", path)
 		exit()
@@ -101,9 +109,9 @@ def training(path = "asset/data.csv", info = False, learning_slope = 0, learning
 	Y = data.iloc[:, 1]
 	size = float(len(X))
 
-	if learning_slope == 0:
+	if learning_slope == None:
 		learning_slope = 1 / (2 * pow(10, (numberLen(max(X)) + numberLen(max(Y)) - 1)))
-	if learning_const == 0:
+	if learning_const == None:
 		learning_const = 0.5
 
 	print("learning_slope : {} -- learning_const : {}".format(learning_slope, learning_const))
