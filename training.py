@@ -29,7 +29,7 @@ def display_value(mileage, path = "asset/data.csv"):
 
 	plt.scatter(X, Y, c = "blue")
 	plt.scatter(mileage, estimatePrice(mileage, slope, const), c = "green")
-	print("estimate price for {} = {}".format(mileage, estimatePrice(mileage, slope, const)))
+	print("estimate price for {}km = {}$".format(mileage, estimatePrice(mileage, slope, const)))
 	
 	plt.show()
 	plt.clf()

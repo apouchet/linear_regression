@@ -15,4 +15,5 @@ def estimatePrice(mileage, slope = None, const = None):
 		exit()
 	if slope == None or const == None:
 		slope, const = getTheta()
-	return (slope * mileage + const)
+	price = slope * mileage + const
+	return (price if (price >= 0) else 0)
